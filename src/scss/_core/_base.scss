@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  background-color: #000;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: $link-color;
+
+  &:hover {
+    color: $link_hover-color;
+  }
+}

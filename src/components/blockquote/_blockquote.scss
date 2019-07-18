@@ -1,0 +1,17 @@
+@import "variables";
+
+blockquote {
+  position: relative;
+  max-width: $blockquote-max-width;
+  margin: $blockquote-margin;
+  padding: $blockquote-padding;
+
+  &:before {
+    display: block;
+    height: $blockquote_before-height;
+    font-size: $blockquote_before-font-size;
+    font-weight: $blockquote_before-font-weight;
+    line-height: $blockquote_before-line-height;
+    content: $blockquote_before-content;
+  }
+}

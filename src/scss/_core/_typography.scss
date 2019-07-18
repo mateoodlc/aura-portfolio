@@ -1,0 +1,71 @@
+%heading-spacing {
+  margin: rem(48) 0 rem(16) 0;
+  line-height: 1.1;
+  &:first-child {
+      margin-top: 0;
+  }
+  &:last-child {
+      margin-bottom: 0;
+  }
+}
+
+/* Base
+   ========================================================================== */
+
+body {
+  font-family: $base-font-family;
+  line-height: $base-line-height;
+  color: $base-color;
+  font-size: $base-font-size;
+}
+
+p {
+  margin: $base-margin;
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+ul, ol {
+  margin: $list-margin;
+  padding: $list-padding;
+  li {
+    margin-top: $list-item-top-margin;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  ul, ol {
+    margin: $list-list-margin;
+  }
+}
+
+/* Headings
+   ========================================================================== */
+
+h1, .h1 {
+  @extend %heading-spacing;
+}
+
+h2, .h2 {
+  @extend %heading-spacing;
+}
+
+h3, .h3 {
+  @extend %heading-spacing;
+}
+
+h4, .h4 {
+  @extend %heading-spacing;
+}
+
+h5, .h5 {
+  @extend %heading-spacing;
+}
+
+h6, .h6 {
+  @extend %heading-spacing;
+}

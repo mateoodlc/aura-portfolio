@@ -1,0 +1,86 @@
+@import "~flickity/css/flickity";
+
+$silc-carousel-padding-top: 56.25%;
+// Prev/Next Buttons
+$silc-carousel-nav-button-background: grey;
+$silc-carousel-nav-button-height: rem(55);
+$silc-carousel-nav-button-width: rem(55);
+
+// Arrows
+$silc-carousel-nav-arrow-color: black;
+$silc-carousel-nav-arrow-height: 35%;
+$silc-carousel-nav-arrow-width: 35%;
+
+.carousel-holder {
+  position: relative;
+}
+
+.carousel {
+  background: gray;
+}
+
+.carousel__slide {
+  width: 100%;
+  text-align: center;
+}
+
+.carousel__slide-image {
+  height: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-top: $silc-carousel-padding-top;
+}
+
+.carousel__slide-content {
+  padding: 1rem;
+}
+
+.carousel__nav {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+.carousel__nav-sizer {
+  width: 100%;
+  padding-top: $silc-carousel-padding-top;
+  height: 0;
+  left: 0;
+  top: 0;
+}
+
+.carousel__nav-previous,
+.carousel__nav-next {
+  position: absolute;
+  top: 50%;
+  width: $silc-carousel-nav-button-width;
+  height: $silc-carousel-nav-button-height;
+  background-color: $silc-carousel-nav-button-background;
+  transform: translateY(-50%);
+  &::after {
+    content: "";
+    width: $silc-carousel-nav-arrow-width;
+    height: $silc-carousel-nav-arrow-height;
+    border-top: .25rem solid $silc-carousel-nav-arrow-color;
+    border-left: .25rem solid $silc-carousel-nav-arrow-color;
+    position: absolute;
+    left: 50% + ($silc-carousel-nav-arrow-width / 4.5);
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+  }
+}
+
+.carousel__nav-previous {
+  left: 0;
+}
+
+.carousel__nav-next {
+  right: 0;
+  &::after {
+    left: 50% - ($silc-carousel-nav-arrow-width / 4.5);
+    transform: translateX(-50%) translateY(-50%) rotate(135deg);
+  }
+}
+
