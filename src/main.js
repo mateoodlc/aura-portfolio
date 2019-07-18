@@ -2,6 +2,9 @@
  * Foo (Studio)
  * (c) 2013-2017 Foo (Studio)
  */
+
+import "es6-promise/auto"
+import "url-polyfill"
 import "sanitize.css/sanitize.css";
 import "./main.styl";
 import "app/utils/polyfills";
