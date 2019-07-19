@@ -23,15 +23,14 @@ import { TweenMax, Power2 } from 'gsap';
         methods: {
             buildProjectAnimation() {
                 this.projectTimeline = new TimelineMax({paused: true, delay: 0})
-                .fromTo(this.$refs.projectBackground, 0.7, {height: '100%'}, {height: 0, ease: Power2.easeOut})
-                .fromTo(this.$refs.projectDescription, 0.7, {height: '100%'}, {height: 0, ease: Power2.easeOut})
+                .fromTo(this.$refs.projectBackground, 0.7, {scaleY: 1}, {scaleY: 0, ease: Power2.easeOut}, 0)
             },
-            nextProject(index) {
-                console.log(index);
+            nextProject() {
+                console.log();
                 this.projectTimeline.play();
             },
-            previousProject(index) {
-                console.log(index);
+            previousProject() {
+                console.log();
                 this.projectTimeline.reverse();
             }
         },
@@ -46,8 +45,7 @@ import { TweenMax, Power2 } from 'gsap';
     <main-transition>
         <div class="ProjectComponent">
             <div class="main-container">
-                <div class="project__background" ref="projectBackground" :style="{backgroundImage: 'url(' + background + ')'}">
-
+                <div class="project__background" :style="{backgroundImage: 'url(' + background + ')', clipPath: 'url(' + '#mask' + index + ')'}">
                     <span :style="{backgroundColor: color, opacity: color == '#323232' ? 0 : 0.9}"></span>
                 </div>
                 <div class="project__description" ref="projectDescription">
@@ -57,10 +55,11 @@ import { TweenMax, Power2 } from 'gsap';
                         <button>Learn More</button>
                     </div>
                 </div>
-                <div class="project__image" :style="{backgroundImage: 'url(' + imageSrc + ')'}"></div>
             </div>
             <svg width="100%" height="100vh">
-              <rect width="100%" height="100%" style="fill:rgba(0,0,0, 0);stroke-width:3;stroke:rgba(0,0,0,0)" />
+                <clipPath :id="'mask'+index">
+                    <rect width="100%" height="100%" ref="projectBackground" style="fill:rgba(0,0,0, 0);stroke-width:3;stroke:rgba(0,0,0,0)" />
+                </clipPath>
             </svg>
         </div>
     </main-transition>

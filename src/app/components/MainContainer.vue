@@ -6,6 +6,7 @@
     import BackgroundVideo from "foo/components/BackgroundVideo.vue";
     import projectComponent from "app/components/ProjectComponent.vue";
     import axios from 'axios'
+import { TweenMax } from 'gsap';
     export default {
         name: "MainContainer",
         data() {
@@ -41,15 +42,20 @@
                 })
             },
             nextProject() {
+                console.log(this.index);
                 if (this.index > 0) {
+                    if (this.index >= 1) {
+                        TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 0});
+                    }
                     this.$refs.project[this.index].nextProject(this.index);
                     this.index -= 1;
                 }
             },
             previousProject() {
-                if (this.index < 3) {
+                if (this.index < 2) {
                     this.$refs.project[this.index + 1].previousProject(this.index);
                     this.index += 1;
+                    TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 1});
                 }
             }
         },
@@ -66,8 +72,9 @@
             :title = project.title
             :description = project.description
         ></project-component>
-        <div class="button__next" @click="nextProject"></div>
-        <div class="button__previous" @click="previousProject"></div>
+        <div class="project__image" v-for="(project, index, key) of projects" :key="key" :index="index" ref="projectImage" :style="{backgroundImage: 'url(' + project.image + ')'}"></div>
+        <div class="button__next" @click="nextProject" :class="{'button__next--disabled': index == 0}"></div>
+        <div class="button__previous" @click="previousProject" :class="{'button__previous--disabled': index == 2}"></div>
         <keep-alive>
             <router-view></router-view>
         </keep-alive>

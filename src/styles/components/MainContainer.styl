@@ -7,6 +7,17 @@
     h5
         position absolute
 
+.project__image
+    position: absolute
+    top: 50%
+    left 50%
+    width: 600px
+    height: 600px
+    transform: translate(-50%, -50%)
+    background-size: cover
+    background-repeat: no-repeat
+    background-position: center
+
 .button__next,
 .button__previous
     position: absolute
@@ -47,3 +58,9 @@
     &:after
         background: #000
         transform-origin: center right
+
+.button__previous--disabled,
+.button__next--disabled
+    opacity: 0.5
+    pointer-events: none
+
