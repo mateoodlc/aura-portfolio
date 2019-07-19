@@ -5,6 +5,7 @@
     import AppHeader from "app/components/AppHeader.vue";
     import BackgroundVideo from "foo/components/BackgroundVideo.vue";
     import projectComponent from "app/components/ProjectComponent.vue";
+    import About from "app/components/About.vue"
     import axios from 'axios'
 import { TweenMax } from 'gsap';
     export default {
@@ -24,7 +25,7 @@ import { TweenMax } from 'gsap';
             this.getData();
         },
         props: {},
-        components: {MainTransition, AppHeader, projectComponent},
+        components: {MainTransition, AppHeader, projectComponent, About},
         methods: {
             onResize(data) {
                 this.width = data.width;
@@ -75,6 +76,7 @@ import { TweenMax } from 'gsap';
         <div class="project__image" v-for="(project, index, key) of projects" :key="key" :index="index" ref="projectImage" :style="{backgroundImage: 'url(' + project.image + ')'}"></div>
         <div class="button__next" @click="nextProject" :class="{'button__next--disabled': index == 0}"></div>
         <div class="button__previous" @click="previousProject" :class="{'button__previous--disabled': index == 2}"></div>
+        <about></about>
         <keep-alive>
             <router-view></router-view>
         </keep-alive>
