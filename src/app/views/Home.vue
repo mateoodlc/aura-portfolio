@@ -73,32 +73,6 @@
 <template>
     <main-transition>
         <div class="Home">
-            <h1 ref="title">{{$t("home.title")}}</h1>
-            <h3>{{$t("home.subtitle")}}</h3>
-
-            <h4 v-if="loading">loading data</h4>
-            <h4 v-else-if="error">Error loading</h4>
-            <div v-else-if="!loading && !error" class="users">
-                <input type="text" v-model="filter">
-                <transition-group name="staggered-fade" tag="ul" :css="false" @before-enter="beforeEnter" @enter="enter"
-                                  @leave="leave">
-                    <li v-for="(user, index) in filteredUsers" :key="user.id" :data-index="index">{{user.name}}</li>
-                </transition-group>
-            </div>
-            <div class="player-container">
-                <div class="content">
-                    <video-player
-                        className="Player"
-                        :autoPlay="false"
-                        useNoise
-                        poster="http://il6.picdn.net/shutterstock/videos/3548084/thumb/1.jpg?i10c=img.resize(height:160)"
-                        src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"
-                        togglePlayOnClick
-                        showPosterOnEnd
-                        hasControls
-                    ></video-player>
-                </div>
-            </div>
         </div>
     </main-transition>
 </template>
