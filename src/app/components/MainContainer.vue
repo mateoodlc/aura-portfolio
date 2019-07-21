@@ -48,6 +48,8 @@ import { TweenMax } from 'gsap';
                 if (this.index > 0) {
                     if (this.index >= 1) {
                         TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 0});
+                        TweenMax.to(this.$refs.projectImage[this.index - 1], 0.5, {opacity: 1});
+                        TweenMax.to(this.$refs.projectImage[this.index], 0.5, {top: '-50%'});
                     }
                     this.$refs.project[this.index].nextProject(this.index);
                     this.index -= 1;
@@ -56,7 +58,9 @@ import { TweenMax } from 'gsap';
             previousProject() {
                 if (this.index < 2) {
                     this.$refs.project[this.index + 1].previousProject(this.index);
+                    TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 0});
                     this.index += 1;
+                    TweenMax.to(this.$refs.projectImage[this.index], 0.5, {top: '50%'});
                     TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 1});
                 }
             }
@@ -74,7 +78,7 @@ import { TweenMax } from 'gsap';
             :title = project.title
             :description = project.description
         ></project-component>
-        <div class="project__image" v-for="(project, index, key) of projects" :key="key" :index="index" ref="projectImage" :style="{backgroundImage: 'url(' + project.image + ')'}"></div>
+        <div class="project__image" v-for="(project, index, key) of projects" :key="key" :index="index" ref="projectImage" :style="{backgroundImage: 'url(' + project.image + ')', opacity: index == 2 ? 1 : 0}"></div>
         <div class="button__next" @click="nextProject" :class="{'button__next--disabled': index == 0}"></div>
         <div class="button__previous" @click="previousProject" :class="{'button__previous--disabled': index == 2}"></div>
         <about></about>
