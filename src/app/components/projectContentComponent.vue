@@ -9,6 +9,7 @@
             return {};
         },
         props: {
+            title: {type: String, required: true},
             text: {type: String, required: true},
             imageSrc1: {type: String, required: true},
             imageSrc2: {type: String, required: true},
@@ -28,10 +29,10 @@
             <div class= "project-content__body-content">
                 <div class= "project-content__info">
                     <div class="project-content__title">
-                        <h1>formas <br>de uso</h1>
+                        <h1>{{title}}</h1>
                     </div>
                     <div class="project-content__text">
-                        <p>Mediante diferentes formas de uso permite el fortalecimiento de dedos y antrebrazos con ejercicios tanto isométricos como isitónicos de flexión y extensión con la ayuda de bandas de resistencia y elementos de agarre.</p>
+                        <p>{{text}}</p>
                     </div>
                     <div class="project-content__details">
                         <div class="project-content__detail one" :style="{backgroundImage: 'url('+ imageSrc1 + ')', borderColor: index === 0 ? 'none' : color}"></div>

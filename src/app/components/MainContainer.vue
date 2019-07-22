@@ -107,6 +107,7 @@ import { TweenMax } from 'gsap';
             :imageSrc = project.image
             :title = project.title
             :description = project.description
+            :innerTitle = project.content.title
             :innerText = project.content.texto
             :innerImageSrc1 = project.content.images[0]
             :innerImageSrc2 = project.content.images[1]
