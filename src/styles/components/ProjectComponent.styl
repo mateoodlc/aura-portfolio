@@ -5,6 +5,8 @@
 
 .ProjectComponent
     display block
+    position: relative
+    z-index: 997
     p, h1, h2, h3, h4
         color: #000
     button
@@ -15,9 +17,11 @@
         color: #fff
         border: none
         border-radius: 30px
+        letter-spacing: 2px
     svg
         position: absolute
-        z-index 100
+        z-index: 100
+        width: 35%
 
 .main-container
     position: absolute
@@ -28,9 +32,19 @@
     height: 100vh
     overflow: hidden
 
+.project__wave
+    position absolute
+    top: 0
+    right: 0
+    width: 65%
+    height: 100vh
+    transform: scaleY(0)
+    background: #1c1f24
+    z-index 999
+
 .project__background
     position relative
-    width: 50%
+    width: 40%
     height 100%
     background-size: cover
     background-repeat: no-repeat
@@ -50,14 +64,31 @@
     flex-direction: column
     justify-content: center
     align-content: space-between
-    width: 50%
+    width: 60%
     height: 100%
-    background: #fff
     transform-origin: bottom
+    z-index 3
 
 .project__description-container
     position absolute
-    top: 50%
+    top: 45%
     left: 50%
     transform: translate(-50%, -50%)
+    h2
+        letter-spacing: 5px
+        opacity: 0.3
+        font-weight: 500
 
+.project__description-title
+    font-size: 5rem
+    font-weight: 800
+    margin-bottom: 1.5rem
+
+.project__background-number
+    position absolute
+    top: 20%
+    left: 40%
+    transform: translate(-50%, -30%)
+    font-size: 28rem
+    font-weight: 500
+    opacity: 0.2

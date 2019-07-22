@@ -8,6 +8,7 @@
     import projectContentComponent from "app/components/projectContentComponent.vue"
     import About from "app/components/About.vue"
     import axios from 'axios'
+    import {CURRENT_INDEX} from "app/store/modules/app";
 import { TweenMax } from 'gsap';
     export default {
         name: "MainContainer",
@@ -44,33 +45,48 @@ import { TweenMax } from 'gsap';
                 })
             },
             nextProject() {
-                console.log(this.index);
                 if (this.index > 0) {
                     if (this.index >= 1) {
                         TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 0});
-                        TweenMax.to(this.$refs.projectImage[this.index - 1], 0.5, {opacity: 1});
-                        TweenMax.to(this.$refs.projectImage[this.index], 0.5, {top: '-50%'});
+                        TweenMax.to(this.$refs.projectImage[this.index - 1], 1.5, {opacity: 1, delay: 0.8});
+                        TweenMax.fromTo(this.$refs.projectImage[this.index - 1], 1.5, {top: '100%'}, {top: '50%', ease: Power1.easeOut});
+                        TweenMax.to(this.$refs.projectImage[this.index], 1.5, {top: '-20%', ease: Power1.easeOut});
                     }
                     this.$refs.project[this.index].nextProject(this.index);
                     this.index -= 1;
+                    this.$store.commit(CURRENT_INDEX, this.index);
+                    console.log(this.$store.getters.currentIndex);
                 }
             },
             previousProject() {
                 if (this.index < 2) {
                     this.$refs.project[this.index + 1].previousProject(this.index);
                     TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 0});
+                    TweenMax.fromTo(this.$refs.projectImage[this.index], 1.5, {top: '50%'}, {top: '100%', ease: Power1.easeOut});
                     this.index += 1;
-                    TweenMax.to(this.$refs.projectImage[this.index], 0.5, {top: '50%'});
-                    TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 1});
+                    TweenMax.to(this.$refs.projectImage[this.index], 1.5, {top: '50%', ease: Power1.easeOut, delay: 0.3});
+                    TweenMax.to(this.$refs.projectImage[this.index], 1.5, {opacity: 1, ease: Power1.ease, delay: 1.1});
+                    this.$store.commit(CURRENT_INDEX, this.index);
+                    console.log(this.$store.getters.currentIndex);
                 }
-            }
+            },
+            onShowAbout() {
+                this.$refs.aboutComponent.openAbout();
+            },
         },
         computed: {}
     };
 </script>
 
 <template>
-    <div class="MainContainer">
+      <div class="MainContainer">
+        <div class="logo">
+            <h1>aura bravo</h1>
+        </div>
+        <div class="about-button" @click="onShowAbout">
+            <h1>about me</h1>
+            <span></span>
+        </div>
         <project-component v-for="(project, index, key) of projects" :key="key" :index="index" ref="project"
             :color = project.mainColor
             :background = project.background
@@ -78,13 +94,9 @@ import { TweenMax } from 'gsap';
             :title = project.title
             :description = project.description
         ></project-component>
-        <div class="project__image" v-for="(project, index, key) of projects" :key="key" :index="index" ref="projectImage" :style="{backgroundImage: 'url(' + project.image + ')', opacity: index == 2 ? 1 : 0}"></div>
+        <div class="project__image" v-for="(project, index, key) of projects" :key="key" :index="index" ref="projectImage" :style="{backgroundImage: 'url(' + project.image + ')', opacity: index == 2 ? 1 : 0,  backgroundSize: index === 0 ? 'contain' : 'cover',}"></div>
         <div class="button__next" @click="nextProject" :class="{'button__next--disabled': index == 0}"></div>
         <div class="button__previous" @click="previousProject" :class="{'button__previous--disabled': index == 2}"></div>
-        <about></about>
-        <project-content-component></project-content-component>
-        <keep-alive>
-            <router-view></router-view>
-        </keep-alive>
-    </div>
+        <about ref="aboutComponent" @openAbout="onShowAbout"></about>
+      </div>
 </template>
