@@ -109,6 +109,11 @@
         filter: blur(10px)
         opacity: 0.3
         z-index: 1
+    +below(800px)
+        top: 32% !important
+        left: 50%;
+        width: 300px;
+        height: 300px;
 
 .project__image.project__image--slided
     left: 20%;
@@ -127,8 +132,9 @@
     cursor pointer
     border-color: #000
     transition: transform 0.3s ease;
-    &:hover 
-        transform: scale(1.2) translateY(-50%);
+    +above(800px)
+        &:hover 
+            transform: scale(1.2) translateY(-50%);
     &:before,
     &:after
         content: ''
@@ -142,6 +148,9 @@
         transform: translate(-50%, -50%) rotate(-45deg)
     &:after
         transform: translate(-50%, -50%) rotate(45deg)
+    +below(800px)
+        top: unset;
+        bottom: 32px;
 
 .button__previous
     left: 30px

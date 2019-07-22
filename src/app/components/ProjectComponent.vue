@@ -4,7 +4,8 @@ import { TweenMax, Power2 } from 'gsap';
 <script>
     import MainTransition from "app/transitions/GSAP";
     import {CURRENT_INDEX} from "app/store/modules/app";
-    import projectContentComponent from 'app/components/projectContentComponent.vue'
+    import projectContentComponent from 'app/components/projectContentComponent.vue';
+    import isMobile from "ismobilejs";
     export default{
         name: "ProjectComponent",
         data(){
@@ -12,6 +13,7 @@ import { TweenMax, Power2 } from 'gsap';
                 projectTimeline: undefined,
                 projectDetailsTl: undefined,
                 projectDetailsOpened: false,
+                isMobileData: isMobile
             };
         },
         props: {
@@ -31,22 +33,28 @@ import { TweenMax, Power2 } from 'gsap';
         components: {MainTransition, projectContentComponent},
         methods: {
             buildProjectAnimation() {
-                this.projectTimeline = new TimelineMax({paused: true, delay: 0})
-                    .fromTo(this.$refs.projectBackground, 0.3, {scaleY: 1}, {scaleY: 0, ease: Power3.easeOut}, 0)
-                    .to(this.$refs.projectWave, 0.4, {transformOrigin: 'bottom'}, 0)
-                    .to(this.$refs.projectWave, 0.5, {scaleY: 1, ease: Power3.easeOut}, 0)
-                    .to(this.$refs.projectWave, 0.1, {transformOrigin: '100% 0'})
-                    .to(this.$refs.projectWave, 0.4, {scaleY: 0, ease: Power3.easeIn});
-                this.projectDetailsTl = new TimelineMax({paused: true, delay: 0})
-                    //.fromTo(this.$refs.projectBackground, 0.3, {scaleX: 1}, {scaleX: 0.7, ease: Power3.easeOut}, 0)
+                if (!this.isPhone) {
+                    this.projectTimeline = new TimelineMax({paused: true, delay: 0})
+                        .fromTo(this.$refs.projectBackground, 0.3, {scaleY: 1}, {scaleY: 0, ease: Power3.easeOut}, 0)
+                        .to(this.$refs.projectWave, 0.4, {transformOrigin: 'bottom'}, 0)
+                        .to(this.$refs.projectWave, 0.5, {scaleY: 1, ease: Power3.easeOut}, 0)
+                        .to(this.$refs.projectWave, 0.1, {transformOrigin: '100% 0'})
+                        .to(this.$refs.projectWave, 0.4, {scaleY: 0, ease: Power3.easeIn});
+                    this.projectDetailsTl = new TimelineMax({paused: true, delay: 0})
+                        //.fromTo(this.$refs.projectBackground, 0.3, {scaleX: 1}, {scaleX: 0.7, ease: Power3.easeOut}, 0)
+                }
             },
             nextProject() {
                 this.projectDetailsOpened = false;
-                this.projectTimeline.play();
+                if (!this.isPhone) {
+                    this.projectTimeline.play();
+                }
             },
             previousProject() {
                 this.projectDetailsOpened = false;
-                this.projectTimeline.reverse();
+                if (!this.isPhone) {
+                    this.projectTimeline.reverse();
+                }
             },
             openDetails() {
                 this.projectDetailsOpened = !this.projectDetailsOpened;
@@ -58,7 +66,11 @@ import { TweenMax, Power2 } from 'gsap';
                 this.$emit('onDetailsOpened', this.projectDetailsOpened);
             }
         },
-        computed: {},
+        computed: {
+            isPhone() {
+                return isMobile.phone;
+        },
+        },
         mounted() {
             this.buildProjectAnimation();
         }
@@ -95,7 +107,7 @@ import { TweenMax, Power2 } from 'gsap';
                     </div>
                 </transition>
             </div>
-            <svg width="100%" height="100vh">
+            <svg width="100%" height="100vh" v-show="!isPhone">
                 <clipPath :id="'mask'+index">
                     <rect width="100%" height="100%" ref="projectBackground" style="fill:rgba(0,0,0, 0);stroke-width:3;stroke:rgba(0,0,0,0)" />
                 </clipPath>
