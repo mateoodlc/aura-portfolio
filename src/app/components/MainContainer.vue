@@ -36,7 +36,7 @@ import { TweenMax } from 'gsap';
                 this.height = data.height;
             },
             getData() {
-                axios.get('https://api.myjson.com/bins/lnssd')
+                axios.get('https://api.myjson.com/bins/bwszh')
                 .then((response) => {
                     console.log(response);
                     this.projects = response.data;
@@ -102,6 +102,7 @@ import { TweenMax } from 'gsap';
             <span></span>
         </div>
         <project-component v-for="(project, index, key) of projects" :key="key" :index="index" ref="project" @onDetailsOpened="openProjectDetails" :class="{'project-details--opened': innerProjectOpened}"
+            :id = project.id
             :color = project.mainColor
             :background = project.background
             :imageSrc = project.image

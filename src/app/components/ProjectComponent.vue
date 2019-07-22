@@ -17,6 +17,7 @@ import { TweenMax, Power2 } from 'gsap';
             };
         },
         props: {
+            id: {type: Number, required: true},
             color: {type: String, required: true},
             background: {type: String, required: true},
             imageSrc: {type: String, required: true},
@@ -35,7 +36,7 @@ import { TweenMax, Power2 } from 'gsap';
             buildProjectAnimation() {
                 if (!this.isPhone) {
                     this.projectTimeline = new TimelineMax({paused: true, delay: 0})
-                        .fromTo(this.$refs.projectBackground, 0.3, {scaleY: 1}, {scaleY: 0, ease: Power3.easeOut}, 0)
+                        .fromTo(this.$refs.projectBackground, 0.5, {scaleY: 1}, {scaleY: 0, ease: Power3.easeOut}, 0)
                         .to(this.$refs.projectWave, 0.4, {transformOrigin: 'bottom'}, 0)
                         .to(this.$refs.projectWave, 0.5, {scaleY: 1, ease: Power3.easeOut}, 0)
                         .to(this.$refs.projectWave, 0.1, {transformOrigin: '100% 0'})
@@ -83,7 +84,7 @@ import { TweenMax, Power2 } from 'gsap';
             <div class="project__wave" ref="projectWave" style="transformOrigin: bottom"></div>
             <div class="main-container">
                 <div class="project__background" :style="{backgroundImage: 'url(' + background + ')', clipPath: 'url(' + '#mask' + index + ')'}">
-                    <div class="project__background-number">0{{index + 1}}</div>
+                    <div class="project__background-number">0{{id}}</div>
                 </div>
                 <transition name="fade">
                     <div class="project__description" ref="projectDescription" v-show="index == $store.getters.currentIndex">
@@ -99,6 +100,7 @@ import { TweenMax, Power2 } from 'gsap';
                         ></project-content-component>
                         <transition name="fade">
                             <div class="project__description-container" v-show="!projectDetailsOpened">
+                                <h2>PRODUCT DESIGN</h2>
                                 <h3 class="project__description-title">{{title}}</h3>
                                 <p class="project__description-text">{{description}}</p>
                             </div>
