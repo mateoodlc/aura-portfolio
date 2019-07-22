@@ -17,10 +17,10 @@
         },
         methods: {
             openAbout() {
-                this.timelineAbout.play();
+                this.timelineAbout.play().timeScale(1.1);;
             },
             closeAbout() {
-                this.timelineAbout.reverse();
+                this.timelineAbout.reverse().timeScale(1.6);
                 console.log(this.showAboutB);
             },
             buildAnimationTimelines() {
@@ -45,7 +45,6 @@
 					<h1>aura bravo.</h1>
 					<div class="about__line"></div>
 				</div>
-                <div class="about__close-button" @click="closeAbout"></div>
 				<div class= "about__content">
 					<div class="about__text" ref="aboutText">
 						<p>Diseñadora Industrial grado Magna Cum Laude, interesada en  el Diseño de Interiores y Mobiliario. Con experiencia en Diseño de Producto, Diseño Gráfico y Fotografía de Producto.

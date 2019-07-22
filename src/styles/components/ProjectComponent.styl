@@ -110,10 +110,14 @@
         width: 15px;
         height: 2px;
         background: #fff;
+        transition transform 0.3s ease
     &:before
         transform: translate(-50%, -50%)
     &:after
         transform: translate(-50%, -50%) rotate(90deg);
     &:hover 
         transform: scale(1.1);
+    &.button-actived
+        &:after
+            transform: translate(-50%, -50%) rotate(0);
 

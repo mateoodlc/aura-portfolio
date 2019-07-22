@@ -18,6 +18,7 @@ import { TweenMax } from 'gsap';
                 height: window.innerHeight,
                 projects: [],
                 index: 2,
+                aboutOpened: false,
             };
         },
         created() {
@@ -69,7 +70,12 @@ import { TweenMax } from 'gsap';
                 }
             },
             onShowAbout() {
-                this.$refs.aboutComponent.openAbout();
+                if (this.aboutOpened) {
+                    this.$refs.aboutComponent.closeAbout();    
+                } else {
+                    this.$refs.aboutComponent.openAbout();
+                }
+                this.aboutOpened = !this.aboutOpened;
             },
         },
         computed: {}
@@ -81,7 +87,7 @@ import { TweenMax } from 'gsap';
         <div class="logo">
             <h1>aura bravo</h1>
         </div>
-        <div class="about-button" @click="onShowAbout">
+        <div class="about-button" :class="{'about-button-actived': aboutOpened}" @click="onShowAbout">
             <h1>about me</h1>
             <span></span>
         </div>

@@ -61,24 +61,26 @@ import { TweenMax, Power2 } from 'gsap';
                 <div class="project__background" :style="{backgroundImage: 'url(' + background + ')', clipPath: 'url(' + '#mask' + index + ')'}">
                     <div class="project__background-number">0{{index + 1}}</div>
                 </div>
-                <div class="project__description" ref="projectDescription" v-show="index == $store.getters.currentIndex">
-                    <project-content-component
-                        :text = innerText
-                        :imageSrc1 = innerImageSrc1
-                        :imageSrc2 = innerImageSrc2
-                        :imageSrc3 = innerImageSrc3
-                        :color = color
-                        :index = index
-                        v-show="projectDetailsOpened"
-                    ></project-content-component>
-                    <main-transition>
-                        <div class="project__description-container" v-show="!projectDetailsOpened">
-                            <h3 class="project__description-title">{{title}}</h3>
-                            <p class="project__description-text">{{description}}</p>
-                        </div>
-                    </main-transition>
-                    <button class="project__show-more--button" ref="showMoreButton" @click="openDetails"></button>
-                </div>
+                <main-transition>
+                    <div class="project__description" ref="projectDescription" v-show="index == $store.getters.currentIndex">
+                        <project-content-component
+                            :text = innerText
+                            :imageSrc1 = innerImageSrc1
+                            :imageSrc2 = innerImageSrc2
+                            :imageSrc3 = innerImageSrc3
+                            :color = color
+                            :index = index
+                            v-show="projectDetailsOpened"
+                        ></project-content-component>
+                        <main-transition>
+                            <div class="project__description-container" v-show="!projectDetailsOpened">
+                                <h3 class="project__description-title">{{title}}</h3>
+                                <p class="project__description-text">{{description}}</p>
+                            </div>
+                        </main-transition>
+                        <button class="project__show-more--button" ref="showMoreButton" :class="{'button-actived': projectDetailsOpened}" @click="openDetails"></button>
+                    </div>
+                </main-transition>
             </div>
             <svg width="100%" height="100vh">
                 <clipPath :id="'mask'+index">
