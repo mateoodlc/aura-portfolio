@@ -12,11 +12,8 @@
     button
         box-sizing: border-box
         text-align: center
-        padding: 20px 50px
-        background: #cccccc
-        color: #fff
         border: none
-        border-radius: 30px
+        border-radius: 50%
         letter-spacing: 2px
     svg
         position: absolute
@@ -72,7 +69,7 @@
 .project__description-container
     position absolute
     top: 45%
-    left: 50%
+    padding: 0 20%;
     transform: translate(-50%, -50%)
     h2
         letter-spacing: 5px
@@ -92,3 +89,31 @@
     font-size: 28rem
     font-weight: 500
     opacity: 0.2
+
+.project__show-more--button 
+    position: absolute;
+    display: block;
+    bottom: 32px;
+    right: 32px;
+    width: 60px;
+    height: 60px;
+    background: #1c1f24;
+    box-shadow: 0 10px 20px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease
+    cursor: pointer
+    &:before, &:after
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 15px;
+        height: 2px;
+        background: #fff;
+    &:before
+        transform: translate(-50%, -50%)
+    &:after
+        transform: translate(-50%, -50%) rotate(90deg);
+    &:hover 
+        transform: scale(1.1);
+

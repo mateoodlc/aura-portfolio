@@ -34,7 +34,7 @@ import { TweenMax } from 'gsap';
                 this.height = data.height;
             },
             getData() {
-                axios.get('https://api.myjson.com/bins/1gfra9')
+                axios.get('https://api.myjson.com/bins/lnssd')
                 .then((response) => {
                     console.log(response);
                     this.projects = response.data;
@@ -55,7 +55,6 @@ import { TweenMax } from 'gsap';
                     this.$refs.project[this.index].nextProject(this.index);
                     this.index -= 1;
                     this.$store.commit(CURRENT_INDEX, this.index);
-                    console.log(this.$store.getters.currentIndex);
                 }
             },
             previousProject() {
@@ -67,7 +66,6 @@ import { TweenMax } from 'gsap';
                     TweenMax.to(this.$refs.projectImage[this.index], 1.5, {top: '50%', ease: Power1.easeOut, delay: 0.3});
                     TweenMax.to(this.$refs.projectImage[this.index], 1.5, {opacity: 1, ease: Power1.ease, delay: 1.1});
                     this.$store.commit(CURRENT_INDEX, this.index);
-                    console.log(this.$store.getters.currentIndex);
                 }
             },
             onShowAbout() {
@@ -93,6 +91,10 @@ import { TweenMax } from 'gsap';
             :imageSrc = project.image
             :title = project.title
             :description = project.description
+            :innerText = project.content.texto
+            :innerImageSrc1 = project.content.images[0]
+            :innerImageSrc2 = project.content.images[1]
+            :innerImageSrc3 = project.content.images[2]
         ></project-component>
         <div class="project__image" v-for="(project, index, key) of projects" :key="key" :index="index" ref="projectImage" :style="{backgroundImage: 'url(' + project.image + ')', opacity: index == 2 ? 1 : 0,  backgroundSize: index === 0 ? 'contain' : 'cover',}"></div>
         <div class="button__next" @click="nextProject" :class="{'button__next--disabled': index == 0}"></div>

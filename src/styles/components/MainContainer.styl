@@ -41,25 +41,30 @@
     right: 1.5rem;
     color: #000;
     z-index: 1000;
+    cursor: pointer;
     span
         position: absolute
         display: block
         top: 48%
         right: 110%
-        width: 20px
+        width: 15px
         height: 5px
         background: #000;
+        transition: transform 0.3s ease;
         &:before
             content: ''
             position: absolute
             display: block
             top: 0
             left: 0
-            width: 20px
+            width: 15px
             height: 5px
             background: #000
             transform-origin: center
             transform: rotate(90deg)
+    &:hover 
+        span
+            transform: scale(1.3);
     h1
         position relative
 
@@ -93,13 +98,18 @@
 .button__previous
     position: absolute
     top: 50%
-    width: 50px
-    height 50px
+    width: 60px
+    height 60px
     background: none
-    border: 1px solid
+    border: 2px solid
+    transform: scale(1) translateY(-50%);
     border-radius: 50%
-    transform: translateY(-50%)
     z-index 999
+    cursor pointer
+    border-color: #000
+    transition: transform 0.3s ease;
+    &:hover 
+        transform: scale(1.2) translateY(-50%);
     &:before,
     &:after
         content: ''
@@ -108,7 +118,7 @@
         top: 50%
         left 50%
         width: 8px
-        height: 1px
+        height: 2px
     &:before
         transform: translate(-50%, -50%) rotate(-45deg)
     &:after
@@ -116,16 +126,14 @@
 
 .button__previous
     left: 30px
-    border-color: #fff
     &:before,
     &:after
-        background: #fff
+        background: #000
         transform-origin: center left
 
 
 .button__next
     right 30px
-    border-color: #000
     &:before,
     &:after
         background: #000
