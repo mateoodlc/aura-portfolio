@@ -10,6 +10,7 @@ import { TweenMax, Power2 } from 'gsap';
         data(){
             return {
                 projectTimeline: undefined,
+                projectDetailsTl: undefined,
                 projectDetailsOpened: false,
             };
         },
@@ -30,20 +31,30 @@ import { TweenMax, Power2 } from 'gsap';
         methods: {
             buildProjectAnimation() {
                 this.projectTimeline = new TimelineMax({paused: true, delay: 0})
-                .fromTo(this.$refs.projectBackground, 0.3, {scaleY: 1}, {scaleY: 0, ease: Power3.easeOut}, 0)
-                .to(this.$refs.projectWave, 0.4, {transformOrigin: 'bottom'}, 0)
-                .to(this.$refs.projectWave, 0.5, {scaleY: 1, ease: Power3.easeOut}, 0)
-                .to(this.$refs.projectWave, 0.1, {transformOrigin: '100% 0'})
-                .to(this.$refs.projectWave, 0.4, {scaleY: 0, ease: Power3.easeIn})
+                    .fromTo(this.$refs.projectBackground, 0.3, {scaleY: 1}, {scaleY: 0, ease: Power3.easeOut}, 0)
+                    .to(this.$refs.projectWave, 0.4, {transformOrigin: 'bottom'}, 0)
+                    .to(this.$refs.projectWave, 0.5, {scaleY: 1, ease: Power3.easeOut}, 0)
+                    .to(this.$refs.projectWave, 0.1, {transformOrigin: '100% 0'})
+                    .to(this.$refs.projectWave, 0.4, {scaleY: 0, ease: Power3.easeIn});
+                this.projectDetailsTl = new TimelineMax({paused: true, delay: 0})
+                    //.fromTo(this.$refs.projectBackground, 0.3, {scaleX: 1}, {scaleX: 0.7, ease: Power3.easeOut}, 0)
             },
             nextProject() {
+                this.projectDetailsOpened = false;
                 this.projectTimeline.play();
             },
             previousProject() {
+                this.projectDetailsOpened = false;
                 this.projectTimeline.reverse();
             },
             openDetails() {
                 this.projectDetailsOpened = !this.projectDetailsOpened;
+                if (this.projectDetailsOpened) {
+                    this.projectDetailsTl.play();
+                } else {
+                    this.projectDetailsTl.reverse();
+                }
+                this.$emit('onDetailsOpened', this.projectDetailsOpened);
             }
         },
         computed: {},
@@ -54,14 +65,14 @@ import { TweenMax, Power2 } from 'gsap';
 </script>
 
 <template>
-    <main-transition>
+    <transition name="fade">
         <div class="ProjectComponent" :style="{pointerEvents: index == $store.getters.currentIndex ? 'auto' : 'none'}">
             <div class="project__wave" ref="projectWave" style="transformOrigin: bottom"></div>
             <div class="main-container">
                 <div class="project__background" :style="{backgroundImage: 'url(' + background + ')', clipPath: 'url(' + '#mask' + index + ')'}">
                     <div class="project__background-number">0{{index + 1}}</div>
                 </div>
-                <main-transition>
+                <transition name="fade">
                     <div class="project__description" ref="projectDescription" v-show="index == $store.getters.currentIndex">
                         <project-content-component
                             :text = innerText
@@ -72,15 +83,15 @@ import { TweenMax, Power2 } from 'gsap';
                             :index = index
                             v-show="projectDetailsOpened"
                         ></project-content-component>
-                        <main-transition>
+                        <transition name="fade">
                             <div class="project__description-container" v-show="!projectDetailsOpened">
                                 <h3 class="project__description-title">{{title}}</h3>
                                 <p class="project__description-text">{{description}}</p>
                             </div>
-                        </main-transition>
+                        </transition>
                         <button class="project__show-more--button" ref="showMoreButton" :class="{'button-actived': projectDetailsOpened}" @click="openDetails"></button>
                     </div>
-                </main-transition>
+                </transition>
             </div>
             <svg width="100%" height="100vh">
                 <clipPath :id="'mask'+index">
@@ -88,5 +99,5 @@ import { TweenMax, Power2 } from 'gsap';
                 </clipPath>
             </svg>
         </div>
-    </main-transition>
+    </transition>
 </template>
