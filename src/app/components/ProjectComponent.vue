@@ -21,6 +21,7 @@ import { TweenMax, Power2 } from 'gsap';
             description: {type: String, required: true},
             contentTitle: {type: String, required: false},
             index: {type: Number, required: true},
+            innerTitle: {type: String, required: true},
             innerText: {type: String, required: true},
             innerImageSrc1: {type: String, required: true},
             innerImageSrc2: {type: String, required: true},
@@ -63,6 +64,7 @@ import { TweenMax, Power2 } from 'gsap';
                 </div>
                 <div class="project__description" ref="projectDescription" v-show="index == $store.getters.currentIndex">
                     <project-content-component
+                        :title = innerTitle
                         :text = innerText
                         :imageSrc1 = innerImageSrc1
                         :imageSrc2 = innerImageSrc2
