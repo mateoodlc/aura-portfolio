@@ -112,8 +112,6 @@
     position absolute
     top: 45%
     left: 50%
-    min-width: 400px;
-    max-width: 400px
     transform: translate(-50%, -50%)
     h2
         letter-spacing: 5px
@@ -124,6 +122,9 @@
         top: unset;
         left: unset;
         transform: none;
+    +above(800px)
+        max-width: 400px;
+        min-width: 400px;
     +above(1200px)
         min-width: 500px;
         max-width: 500px;
@@ -158,6 +159,7 @@
     box-shadow: 0 10px 20px 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease
     cursor: pointer
+    z-index: 999;
     &:before, &:after
         content: '';
         display: block;
@@ -177,6 +179,10 @@
     &.button-actived
         &:after
             transform: translate(-50%, -50%) rotate(0);
+    +below(800px)
+        position: fixed;
+        top: 85vh;
+        bottom: unset;
 
 .fade-enter-active {
     transition: opacity .4s;
