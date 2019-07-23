@@ -25,6 +25,12 @@
         height: 50% !important;
         path
             fill: #fff
+    +below(800px)
+        a
+            width: 40px;
+            height: 40px;
+            &:first-of-type
+                margin-right: 10px
 *{
     margin: 0;
     padding: 0;
@@ -66,21 +72,29 @@ p{
     padding-top: 25vh;
     background-color: #fff;
     +below(800px) {
+        height: unset;
         align-content: flex-start;
         padding-top: 7%;
+        padding-bottom: 7%;
     }
 }
 .about__text {
     position: absolute;
     top: 0;
     width: 100%
+    +below(800px) {
+        position: unset;
+    }
 }
-.about__name{
-    width: 50%;
+.about__name
     display: inline-flex;
     width: 40%;
     flex-direction: column;
-}
+    +below(800px)
+        display: block;
+        width: unset;
+
+
 .about__content{
     position: relative;
     display: inline-flex;
@@ -88,6 +102,11 @@ p{
     min-width: 360px;
     margin-top: 12px;
     flex-direction: column;
+    +below(800px) {
+        display: block;
+        width: 100%;
+        min-width: unset;
+    }
 }
 .about__social{
     justify-content: space-between;
@@ -100,12 +119,21 @@ p{
     flex-direction: row;
     align-items: center;
     margin-top: 10%;
+    +below(550) {
+        display: block;
+    }
 }
 .about__contact-info{
     margin-left: 30px;
     display: inline-flex;
     flex-direction: column;
-
+    +below(800px) {
+        display: block;
+        width: 100%;
+        margin-left: 0;
+        margin-top: 15px;
+        font-size: 13px;
+    }
 }
 .about__contact-icon{
     width: 40px;

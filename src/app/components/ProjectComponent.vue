@@ -70,7 +70,7 @@ import { TweenMax, Power2 } from 'gsap';
         computed: {
             isPhone() {
                 return isMobile.phone;
-        },
+            },
         },
         mounted() {
             this.buildProjectAnimation();
@@ -83,7 +83,7 @@ import { TweenMax, Power2 } from 'gsap';
         <div class="ProjectComponent" :style="{pointerEvents: index == $store.getters.currentIndex ? 'auto' : 'none'}">
             <div class="project__wave" ref="projectWave" style="transformOrigin: bottom"></div>
             <div class="main-container">
-                <div class="project__background" :style="{backgroundImage: 'url(' + background + ')', clipPath: 'url(' + '#mask' + index + ')'}">
+                <div class="project__background" :style="{backgroundImage: 'url(' + background + ')', clipPath: 'url(' + '#mask' + index + ')', webkitClipPath: 'url('+ '#mask' + index + ')'}">
                     <div class="project__background-number">0{{id}}</div>
                 </div>
                 <transition name="fade">

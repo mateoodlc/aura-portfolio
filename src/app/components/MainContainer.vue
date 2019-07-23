@@ -8,6 +8,7 @@
     import projectContentComponent from "app/components/projectContentComponent.vue"
     import About from "app/components/About.vue"
     import axios from 'axios'
+    import isMobile from "ismobilejs";
     import {CURRENT_INDEX} from "app/store/modules/app";
 import { TweenMax } from 'gsap';
     export default {
@@ -78,7 +79,7 @@ import { TweenMax } from 'gsap';
             },
             onShowAbout() {
                 if (this.aboutOpened) {
-                    this.$refs.aboutComponent.closeAbout();    
+                    this.$refs.aboutComponent.closeAbout();
                 } else {
                     this.$refs.aboutComponent.openAbout();
                 }
@@ -88,17 +89,23 @@ import { TweenMax } from 'gsap';
                 this.innerProjectOpened = value;
             }
         },
-        computed: {}
+        computed: {
+            isPhone() {
+                return isMobile.phone;
+            },
+        }
     };
 </script>
 
 <template>
       <div class="MainContainer">
         <div class="logo">
-            <h1>aura bravo</h1>
+            <h1 v-if="!isPhone">aura bravo</h1>
+            <h1 v-if="isPhone">aura.</h1>
         </div>
         <div class="about-button" :class="{'about-button-actived': aboutOpened}" @click="onShowAbout">
-            <h1>about me</h1>
+            <h1 v-if="!isPhone">about me</h1>
+            <h1 v-if="isPhone">about</h1>
             <span></span>
         </div>
         <project-component v-for="(project, index, key) of projects" :key="key" :index="index" ref="project" @onDetailsOpened="openProjectDetails" :class="{'project-details--opened': innerProjectOpened}"
