@@ -11,6 +11,7 @@ import { TweenMax, Power2 } from 'gsap';
         data(){
             return {
                 projectTimeline: undefined,
+                mobileProjectTimeline: undefined,
                 projectDetailsTl: undefined,
                 projectDetailsOpened: false,
                 isMobileData: isMobile
@@ -41,30 +42,38 @@ import { TweenMax, Power2 } from 'gsap';
                         .to(this.$refs.projectWave, 0.5, {scaleY: 1, ease: Power3.easeOut}, 0)
                         .to(this.$refs.projectWave, 0.1, {transformOrigin: '100% 0'})
                         .to(this.$refs.projectWave, 0.4, {scaleY: 0, ease: Power3.easeIn});
-                    this.projectDetailsTl = new TimelineMax({paused: true, delay: 0})
-                        //.fromTo(this.$refs.projectBackground, 0.3, {scaleX: 1}, {scaleX: 0.7, ease: Power3.easeOut}, 0)
+                    /* this.projectDetailsTl = new TimelineMax({paused: true, delay: 0})
+                        //.fromTo(this.$refs.projectBackground, 0.3, {scaleX: 1}, {scaleX: 0.7, ease: Power3.easeOut}, 0 ) */
+                } else {
+                    this.mobileProjectTimeline = new TimelineMax({paused: true, delay: 0})
+                        .to(this.$refs.projectBackgroundBox, 0.1, {transformOrigin: 'right'})
+                        .fromTo(this.$refs.projectBackgroundBox, 0.5, {scaleX: 1}, {scaleX: 0, ease: Power3.easeOut}, 0)
                 }
             },
             nextProject() {
                 this.projectDetailsOpened = false;
                 if (!this.isPhone) {
                     this.projectTimeline.play();
+                } else {
+                    this.mobileProjectTimeline.play();
                 }
             },
             previousProject() {
                 this.projectDetailsOpened = false;
                 if (!this.isPhone) {
                     this.projectTimeline.reverse();
+                } else {
+                    this.mobileProjectTimeline.reverse();
                 }
             },
             openDetails() {
                 this.projectDetailsOpened = !this.projectDetailsOpened;
-                if (this.projectDetailsOpened) {
+                /* if (this.projectDetailsOpened) {
                     this.projectDetailsTl.play();
                 } else {
                     this.projectDetailsTl.reverse();
-                }
-                this.$emit('onDetailsOpened', this.projectDetailsOpened);
+                } */
+                //this.$emit('onDetailsOpened', this.projectDetailsOpened);
             }
         },
         computed: {
@@ -83,7 +92,7 @@ import { TweenMax, Power2 } from 'gsap';
         <div class="ProjectComponent" :style="{pointerEvents: index == $store.getters.currentIndex ? 'auto' : 'none'}">
             <div class="project__wave" ref="projectWave" style="transformOrigin: bottom"></div>
             <div class="main-container">
-                <div class="project__background" :style="{backgroundImage: 'url(' + background + ')', clipPath: 'url(' + '#mask' + index + ')', webkitClipPath: 'url('+ '#mask' + index + ')'}">
+                <div class="project__background" ref="projectBackgroundBox" :style="{backgroundImage: 'url(' + background + ')', clipPath: isPhone ? 'none' : 'url(' + '#mask' + index + ')', webkitClipPath: isPhone ? 'none' : 'url('+ '#mask' + index + ')'}">
                     <div class="project__background-number">0{{id}}</div>
                 </div>
                 <transition name="fade">
