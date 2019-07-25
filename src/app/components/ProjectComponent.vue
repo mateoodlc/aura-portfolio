@@ -84,6 +84,7 @@ import { TweenMax, Power2 } from 'gsap';
 </script>
 
 <template>
+<transition name="fade">
     <div class="ProjectComponent" :style="{pointerEvents: index == $store.getters.currentIndex ? 'auto' : 'none'}">
         <div class="project__wave" ref="projectWave" style="transformOrigin: bottom"></div>
         <div class="main-container">
@@ -124,4 +125,5 @@ import { TweenMax, Power2 } from 'gsap';
             </clipPath>
         </svg>
     </div>
+    </transition>
 </template>
