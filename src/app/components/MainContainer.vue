@@ -37,11 +37,11 @@ import { TweenMax } from 'gsap';
                 this.height = data.height;
             },
             getData() {
-                axios.get('https://api.myjson.com/bins/bwszh')
+                axios.get('https://api.myjson.com/bins/c4bw9')
                 .then((response) => {
                     console.log(response);
                     this.projects = response.data;
-                    console.log('auras data', this.projects);
+                    console.log("aura's data", this.projects);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -50,32 +50,56 @@ import { TweenMax } from 'gsap';
             nextProject() {
                 this.innerProjectOpened = false;
                 setTimeout(() => {
-                    if (this.index > 0) {
-                        if (this.index >= 1) {
-                            TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 0});
-                            TweenMax.to(this.$refs.projectImage[this.index - 1], 1.5, {opacity: 1, delay: 0.8});
-                            TweenMax.fromTo(this.$refs.projectImage[this.index - 1], 1.5, {top: '100%'}, {top: '50%', ease: Power1.easeOut});
-                            TweenMax.to(this.$refs.projectImage[this.index], 1.5, {top: '-20%', ease: Power1.easeOut});
+                    if (!this.isPhone) {
+                        if (this.index > 0) {
+                            if (this.index >= 1) {
+                                TweenMax.to(this.$refs.projectImage[this.index - 1], 0, {display: 'block'});
+                                TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 0});
+                                TweenMax.to(this.$refs.projectImage[this.index - 1], 1.5, {opacity: 1, delay: 0.8});
+                                TweenMax.fromTo(this.$refs.projectImage[this.index - 1], 1.5, {top: '100%'}, {top: '50%', ease: Power1.easeOut});
+                                TweenMax.to(this.$refs.projectImage[this.index], 1.5, {top: '-20%', ease: Power1.easeOut});
+                            }
+                            this.$refs.project[this.index].nextProject(this.index);
+                            this.index -= 1;
+                            this.$store.commit(CURRENT_INDEX, this.index);
                         }
-                        this.$refs.project[this.index].nextProject(this.index);
-                        this.index -= 1;
-                        this.$store.commit(CURRENT_INDEX, this.index);
+                    } else {
+                        if (this.index > 0) {
+                            if (this.index >= 1) {
+                                TweenMax.to(this.$refs.projectImage[this.index - 1], 0, {display: 'block'});
+                                TweenMax.to(this.$refs.projectImage[this.index], 0.8, {opacity: 0});
+                                TweenMax.to(this.$refs.projectImage[this.index - 1], 0.8, {opacity: 1, delay: 0.5});
+                                TweenMax.fromTo(this.$refs.projectImage[this.index - 1], 1.2, {top: '100%'}, {top: '32%', ease: Power1.easeOut});
+                                TweenMax.to(this.$refs.projectImage[this.index], 1.2, {top: '-10%', ease: Power1.easeOut});
+                            }
+                            this.$refs.project[this.index].nextProject(this.index);
+                            this.index -= 1;
+                            this.$store.commit(CURRENT_INDEX, this.index);
+                        }
                     }
-                }, 300)
+                }, 300);
             },
             previousProject() {
                 this.innerProjectOpened = false;
-                setTimeout(() => {
-                    if (this.index < 2) {
-                        this.$refs.project[this.index + 1].previousProject(this.index);
+                if (this.index < 2) {
+                    this.$refs.project[this.index + 1].previousProject(this.index);
+                    if (this.isPhone) {
+                        TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 0});
+                        TweenMax.fromTo(this.$refs.projectImage[this.index], 1.2, {top: '32%'}, {top: '100%', ease: Power1.easeOut});
+                        TweenMax.to(this.$refs.projectImage[this.index], 0, {display: 'none', delay: 0.8});
+                        this.index += 1;
+                        TweenMax.to(this.$refs.projectImage[this.index], 1.2, {top: '32%', ease: Power1.easeOut, delay: 0.3});
+                        TweenMax.to(this.$refs.projectImage[this.index], 0.8, {opacity: 1, ease: Power1.ease, delay: 0.5});
+                    } else {
                         TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 0});
                         TweenMax.fromTo(this.$refs.projectImage[this.index], 1.5, {top: '50%'}, {top: '100%', ease: Power1.easeOut});
+                        TweenMax.to(this.$refs.projectImage[this.index], 0, {display: 'none', delay: 1});
                         this.index += 1;
                         TweenMax.to(this.$refs.projectImage[this.index], 1.5, {top: '50%', ease: Power1.easeOut, delay: 0.3});
                         TweenMax.to(this.$refs.projectImage[this.index], 1.5, {opacity: 1, ease: Power1.ease, delay: 1.1});
-                        this.$store.commit(CURRENT_INDEX, this.index);
                     }
-                }, 300)
+                    this.$store.commit(CURRENT_INDEX, this.index);
+                }
             },
             onShowAbout() {
                 if (this.aboutOpened) {
@@ -108,7 +132,7 @@ import { TweenMax } from 'gsap';
             <h1 v-if="isPhone">about</h1>
             <span></span>
         </div>
-        <project-component v-for="(project, index, key) of projects" :key="key" :index="index" ref="project" @onDetailsOpened="openProjectDetails" :class="{'project-details--opened': innerProjectOpened}"
+        <project-component v-for="(project, index, key) of projects" :key="key" :index="index" ref="project" @onDetailsOpened="openProjectDetails" v-show="isPhone ? !aboutOpened : true"
             :id = project.id
             :color = project.mainColor
             :background = project.background

@@ -37,9 +37,9 @@ import { TweenMax, Power2 } from 'gsap';
             buildProjectAnimation() {
                 if (!this.isPhone) {
                     this.projectTimeline = new TimelineMax({paused: true, delay: 0})
-                        .fromTo(this.$refs.projectBackground, 0.5, {scaleY: 1}, {scaleY: 0, ease: Power3.easeOut}, 0)
+                        .fromTo(this.$refs.projectBackground, 0.5, {scaleY: 1}, {scaleY: 0, ease: Power3.easeIn}, 0)
                         .to(this.$refs.projectWave, 0.4, {transformOrigin: 'bottom'}, 0)
-                        .to(this.$refs.projectWave, 0.5, {scaleY: 1, ease: Power3.easeOut}, 0)
+                        .to(this.$refs.projectWave, 0.5, {scaleY: 1, ease: Power3.easeIn}, 0)
                         .to(this.$refs.projectWave, 0.1, {transformOrigin: '100% 0'})
                         .to(this.$refs.projectWave, 0.4, {scaleY: 0, ease: Power3.easeIn});
                     /* this.projectDetailsTl = new TimelineMax({paused: true, delay: 0})
@@ -67,13 +67,9 @@ import { TweenMax, Power2 } from 'gsap';
                 }
             },
             openDetails() {
+                TweenMax.to(this.$refs.showMoreButton, 0.1, {scale: 0.5, ease: Power2.ease})
+                TweenMax.to(this.$refs.showMoreButton, 0.2, {scale: 1, ease: Power2.easeIn, delay: 0.1})
                 this.projectDetailsOpened = !this.projectDetailsOpened;
-                /* if (this.projectDetailsOpened) {
-                    this.projectDetailsTl.play();
-                } else {
-                    this.projectDetailsTl.reverse();
-                } */
-                //this.$emit('onDetailsOpened', this.projectDetailsOpened);
             }
         },
         computed: {
@@ -88,41 +84,44 @@ import { TweenMax, Power2 } from 'gsap';
 </script>
 
 <template>
-    <transition name="fade">
-        <div class="ProjectComponent" :style="{pointerEvents: index == $store.getters.currentIndex ? 'auto' : 'none'}">
-            <div class="project__wave" ref="projectWave" style="transformOrigin: bottom"></div>
-            <div class="main-container">
-                <div class="project__background" ref="projectBackgroundBox" :style="{backgroundImage: 'url(' + background + ')', clipPath: isPhone ? 'none' : 'url(' + '#mask' + index + ')', webkitClipPath: isPhone ? 'none' : 'url('+ '#mask' + index + ')'}">
-                    <div class="project__background-number">0{{id}}</div>
-                </div>
-                <transition name="fade">
-                    <div class="project__description" ref="projectDescription" v-show="index == $store.getters.currentIndex">
-                        <project-content-component
-                            :title = innerTitle
-                            :text = innerText
-                            :imageSrc1 = innerImageSrc1
-                            :imageSrc2 = innerImageSrc2
-                            :imageSrc3 = innerImageSrc3
-                            :color = color
-                            :index = index
-                            v-show="projectDetailsOpened"
-                        ></project-content-component>
-                        <transition name="fade">
-                            <div class="project__description-container" v-show="!projectDetailsOpened">
-                                <h2>PRODUCT DESIGN</h2>
-                                <h3 class="project__description-title">{{title}}</h3>
-                                <p class="project__description-text">{{description}}</p>
-                            </div>
-                        </transition>
-                        <button class="project__show-more--button" ref="showMoreButton" :class="{'button-actived': projectDetailsOpened}" @click="openDetails"></button>
-                    </div>
-                </transition>
+    <div class="ProjectComponent" :style="{pointerEvents: index == $store.getters.currentIndex ? 'auto' : 'none'}">
+        <div class="project__wave" ref="projectWave" style="transformOrigin: bottom"></div>
+        <div class="main-container">
+            <div class="project__background" ref="projectBackgroundBox" :style="{backgroundImage: 'url(' + background + ')', clipPath: isPhone ? 'none' : 'url(' + '#mask' + index + ')', webkitClipPath: isPhone ? 'none' : 'url('+ '#mask' + index + ')'}">
+                <div class="project__background-number">0{{id}}</div>
             </div>
-            <svg width="100%" height="100vh" v-show="!isPhone">
-                <clipPath :id="'mask'+index">
-                    <rect width="100%" height="100%" ref="projectBackground" style="fill:rgba(0,0,0, 0);stroke-width:3;stroke:rgba(0,0,0,0)" />
-                </clipPath>
-            </svg>
+            <transition name="fade">
+                <div class="project__description" ref="projectDescription" v-show="index == $store.getters.currentIndex">
+                    <h2 v-show="isPhone">PRODUCT DESIGN</h2>
+                    <project-content-component
+                        :title = innerTitle
+                        :text = innerText
+                        :imageSrc1 = innerImageSrc1
+                        :imageSrc2 = innerImageSrc2
+                        :imageSrc3 = innerImageSrc3
+                        :color = color
+                        :index = index
+                        v-show="projectDetailsOpened"
+                    ></project-content-component>
+                    <transition name="fade">
+                        <div class="project__description-container" v-show="!projectDetailsOpened">
+                            <h2 v-show="!isPhone">PRODUCT DESIGN</h2>
+                            <h3 class="project__description-title">{{title}}</h3>
+                            <p class="project__description-text">{{description}}</p>
+                        </div>
+                    </transition>
+                    <button class="project__show-more--button" :class="{'button-actived': projectDetailsOpened}" @click="openDetails">
+                        <p v-show="!projectDetailsOpened && !isPhone">Show Details</p>
+                        <p v-show="projectDetailsOpened && !isPhone">Hide Details</p>
+                        <span ref="showMoreButton"></span>
+                    </button>
+                </div>
+            </transition>
         </div>
-    </transition>
+        <svg width="100%" height="100vh" v-show="!isPhone">
+            <clipPath :id="'mask'+index">
+                <rect width="100%" height="100%" ref="projectBackground" style="fill:rgba(0,0,0, 0);stroke-width:3;stroke:rgba(0,0,0,0)" />
+            </clipPath>
+        </svg>
+    </div>
 </template>
