@@ -11,9 +11,12 @@
     padding-top: 80px;
     z-index: 998;
     pointer-events: none;
+    +below(550px)
+        padding: 0;
     +below(800px)
-        position: unset;
+        left: 0;
         height: unset;
+        padding: 0 2rem;
 *{
     margin: 0;
     padding: 0;

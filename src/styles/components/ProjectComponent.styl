@@ -92,7 +92,7 @@
     height: 100%
     transform-origin: bottom
     z-index 3
-    transition: width .3s ease-out, left .3s ease-out
+    transition: width .3s ease-out, height .3s ease, left .3s ease-out
     &:before
         content: '';
         display: block;
@@ -103,11 +103,10 @@
         height: 100%;
         background: white;
     +below(800px)
-        position: relative;
-        top: unset;
+        top: 50%;
         left: unset;
         width: 100%;
-        height unset;
+        height 50%;
         padding: 0px 32px 100px 32px;
     +below(550px)
         padding: 260px 24px 100px 24px;
@@ -121,9 +120,11 @@
     top: 45%
     left: 25%
     transform: translate(-50%, -50%)
+    +below(550px)
+        padding-right: 2rem;
+        padding-bottom: 6rem;
     +below(800px)
-        position: relative;
-        top: unset;
+        top: 0;
         left: unset;
         transform: none;
     +above(800px)
@@ -160,7 +161,7 @@
     text-transform: lowercase;
     letter-spacing: 3px;
     h3
-        color: #fff
+        color: #fff !important
 
 .project__show-more--button
     position: absolute;

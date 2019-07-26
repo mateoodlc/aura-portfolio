@@ -35,9 +35,9 @@
                         <p>{{text}}</p>
                     </div>
                     <div class="project-content__details">
-                        <div class="project-content__detail one" :style="{backgroundImage: 'url('+ imageSrc1 + ')', borderColor: index === 2 ? 'none' : color}"></div>
-                        <div class="project-content__detail two" :style="{backgroundImage: 'url('+ imageSrc2 + ')', borderColor: index === 2 ? 'none' : color}"></div>
-                        <div class="project-content__detail three" :style="{backgroundImage: 'url('+ imageSrc3 + ')', borderColor: index === 2 ? 'none' : color}"></div>
+                        <div class="project-content__detail one" :style="{backgroundImage: 'url('+ imageSrc1 + ')', borderColor: index === 3 ? 'none' : color}"></div>
+                        <div class="project-content__detail two" :style="{backgroundImage: 'url('+ imageSrc2 + ')', borderColor: index === 3 ? 'none' : color}"></div>
+                        <div class="project-content__detail three" :style="{backgroundImage: 'url('+ imageSrc3 + ')', borderColor: index === 3 ? 'none' : color}"></div>
                     </div>
                 </div>
             </div>

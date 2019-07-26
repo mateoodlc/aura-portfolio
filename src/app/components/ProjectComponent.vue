@@ -81,9 +81,36 @@ import { TweenMax, Power2 } from 'gsap';
                 return isMobile.tablet;
             }
         },
+        watch: {
+            projectDetailsOpened(newValue, oldValue) {
+                console.log(newValue, oldValue);
+                if (this.isPhone) {
+                    if (newValue) {
+                        this.$nextTick(() => {
+                            let dynamicHeight = this.$refs.projectContentRef.$el.offsetHeight;
+                            this.$refs.projectDescription.style.height = dynamicHeight + 'px';
+                        });
+                    } else {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                        setTimeout(() => {
+                            this.$refs.projectDescription.style.height = this.$refs.projectDescriptionContainer.offsetHeight + 'px';
+                        }, 100)
+                    }
+                }
+            }
+        },
         mounted() {
             this.buildProjectAnimation();
             TweenMax.to(this.$refs.showMoreButton, 0.2, {backgroundColor: this.color, ease: Power2.easeIn, delay: 1})
+            if (this.isPhone) {
+                setTimeout(() => {
+                    this.$refs.projectDescription.style.height = this.$refs.projectDescriptionContainer.offsetHeight + 'px';
+                    console.log(this.$refs.projectDescriptionContainer.offsetHeight);
+                }, 100)
+            }
         }
     };
 </script>
@@ -98,7 +125,6 @@ import { TweenMax, Power2 } from 'gsap';
             </div>
             <transition name="fade">
                 <div class="project__description" ref="projectDescription" v-show="index == $store.getters.currentIndex">
-                    <h2 v-show="isPhone">PRODUCT DESIGN</h2>
                     <project-content-component
                         :title = innerTitle
                         :text = innerText
@@ -108,10 +134,11 @@ import { TweenMax, Power2 } from 'gsap';
                         :color = color
                         :index = index
                         v-show="projectDetailsOpened"
+                        ref="projectContentRef"
                     ></project-content-component>
                     <main-transition>
-                        <div class="project__description-container" v-show="!projectDetailsOpened">
-                            <h2 v-show="!isPhone">PRODUCT DESIGN</h2>
+                        <div class="project__description-container" ref="projectDescriptionContainer" v-show="!projectDetailsOpened">
+                            <h2>PRODUCT DESIGN</h2>
                             <h3 class="project__description-title">{{title}}</h3>
                             <p class="project__description-text">{{description}}</p>
                         </div>
