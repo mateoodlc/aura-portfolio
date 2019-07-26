@@ -35,7 +35,7 @@ import { TweenMax, Power2 } from 'gsap';
         components: {MainTransition, projectContentComponent},
         methods: {
             buildProjectAnimation() {
-                if (!this.isPhone) {
+                if (!this.isPhone && !this.isTablet) {
                     this.projectTimeline = new TimelineMax({paused: true, delay: 0})
                         .fromTo(this.$refs.projectBackground, 0.5, {scaleY: 1}, {scaleY: 0, ease: Power3.easeIn}, 0)
                         .to(this.$refs.projectWave, 0.4, {transformOrigin: 'bottom'}, 0)
@@ -52,7 +52,7 @@ import { TweenMax, Power2 } from 'gsap';
             },
             nextProject() {
                 this.projectDetailsOpened = false;
-                if (!this.isPhone) {
+                if (!this.isPhone && !this.isTablet) {
                     this.projectTimeline.play();
                 } else {
                     this.mobileProjectTimeline.play();
@@ -60,7 +60,7 @@ import { TweenMax, Power2 } from 'gsap';
             },
             previousProject() {
                 this.projectDetailsOpened = false;
-                if (!this.isPhone) {
+                if (!this.isPhone && !this.isTablet) {
                     this.projectTimeline.reverse();
                 } else {
                     this.mobileProjectTimeline.reverse();
@@ -76,6 +76,9 @@ import { TweenMax, Power2 } from 'gsap';
             isPhone() {
                 return isMobile.phone;
             },
+            isTablet() {
+                return isMobile.tablet;
+            }
         },
         mounted() {
             this.buildProjectAnimation();
@@ -119,7 +122,7 @@ import { TweenMax, Power2 } from 'gsap';
                 </div>
             </transition>
         </div>
-        <svg width="100%" height="100vh" v-show="!isPhone">
+        <svg width="100%" height="100vh" v-show="!isPhone && !isTablet">
             <clipPath :id="'mask'+index">
                 <rect width="100%" height="100%" ref="projectBackground" style="fill:rgba(0,0,0, 0);stroke-width:3;stroke:rgba(0,0,0,0)" />
             </clipPath>

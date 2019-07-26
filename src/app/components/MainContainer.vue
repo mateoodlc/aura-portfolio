@@ -49,8 +49,7 @@ import { TweenMax } from 'gsap';
             },
             nextProject() {
                 this.innerProjectOpened = false;
-                setTimeout(() => {
-                    if (!this.isPhone) {
+                    if (!this.isPhone && !this.isTablet) {
                         if (this.index > 0) {
                             if (this.index >= 1) {
                                 TweenMax.to(this.$refs.projectImage[this.index - 1], 0, {display: 'block'});
@@ -63,7 +62,18 @@ import { TweenMax } from 'gsap';
                             this.index -= 1;
                             this.$store.commit(CURRENT_INDEX, this.index);
                         }
-                    } else {
+                    } else if(this.isTablet) {
+                            if (this.index >= 1) {
+                                TweenMax.to(this.$refs.projectImage[this.index - 1], 0, {display: 'block'});
+                                TweenMax.to(this.$refs.projectImage[this.index], 0.8, {opacity: 0});
+                                TweenMax.to(this.$refs.projectImage[this.index - 1], 0.8, {opacity: 1, delay: 0.5});
+                                TweenMax.fromTo(this.$refs.projectImage[this.index - 1], 1.2, {top: '100%'}, {top: '25%', ease: Power1.easeOut});
+                                TweenMax.to(this.$refs.projectImage[this.index], 1.2, {top: '-10%', ease: Power1.easeOut});
+                            }
+                            this.$refs.project[this.index].nextProject(this.index);
+                            this.index -= 1;
+                            this.$store.commit(CURRENT_INDEX, this.index);
+                       } else {
                         if (this.index > 0) {
                             if (this.index >= 1) {
                                 TweenMax.to(this.$refs.projectImage[this.index - 1], 0, {display: 'block'});
@@ -77,7 +87,6 @@ import { TweenMax } from 'gsap';
                             this.$store.commit(CURRENT_INDEX, this.index);
                         }
                     }
-                }, 300);
             },
             previousProject() {
                 this.innerProjectOpened = false;
@@ -90,6 +99,13 @@ import { TweenMax } from 'gsap';
                         this.index += 1;
                         TweenMax.to(this.$refs.projectImage[this.index], 1.2, {top: '32%', ease: Power1.easeOut, delay: 0.3});
                         TweenMax.to(this.$refs.projectImage[this.index], 0.8, {opacity: 1, ease: Power1.ease, delay: 0.5});
+                    } else if(this.isTablet) {
+                        TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 0});
+                        TweenMax.fromTo(this.$refs.projectImage[this.index], 1.5, {top: '25%'}, {top: '100%', ease: Power1.easeOut});
+                        TweenMax.to(this.$refs.projectImage[this.index], 0, {display: 'none', delay: 1});
+                        this.index += 1;
+                        TweenMax.to(this.$refs.projectImage[this.index], 1.5, {top: '25%', ease: Power1.easeOut, delay: 0.3});
+                        TweenMax.to(this.$refs.projectImage[this.index], 1.5, {opacity: 1, ease: Power1.ease, delay: 1.1});
                     } else {
                         TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 0});
                         TweenMax.fromTo(this.$refs.projectImage[this.index], 1.5, {top: '50%'}, {top: '100%', ease: Power1.easeOut});
@@ -116,6 +132,9 @@ import { TweenMax } from 'gsap';
         computed: {
             isPhone() {
                 return isMobile.phone;
+            },
+            isTablet() {
+                return isMobile.tablet;
             },
         }
     };

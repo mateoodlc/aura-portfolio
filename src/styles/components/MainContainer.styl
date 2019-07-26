@@ -91,10 +91,10 @@
 
 .project__image
     position: absolute
-    top: 50%
-    left 30%
-    width: 600px
-    height: 600px
+    top: 30%
+    left 50%
+    width: 250px;
+    height: 250px;
     transform: translate(-50%, -50%)
     background-size: cover
     background-repeat: no-repeat
@@ -112,22 +112,29 @@
         height: 70px
         background: radial-gradient(rgba(0,0,0,1), rgba(0,0,0,0.4));
         border-radius: 40%
-        filter: blur(10px)
+        filter: blur(30px)
         opacity: 0.3
         z-index: 1
-    +below(1400px)
+    +above(550px)
+        top: 25%;
+        left: 50%;
+        width: 350px;
+        height: 350px;
+        &:before
+            filter: blur(20px)
+            left: 50%;
+            bottom: -50px;
+            background: radial-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.1));
+    +above(800px)
+        top: 50%
+        left: 30%
         width: 40%;
         height: 0;
         padding-top: 40%;
-    +below(800px)
-        top: 30%;
-        left: 50%;
-        width: 250px;
-        height: 250px;
-        &:before
-            left: 50%;
-            bottom: -20px;
-            background: radial-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.1));
+    +above(1400px)
+        width: 600px
+        height: 600px
+        padding-top: 0;
 
 .project__image.project__image--slided
     left: 20%;
