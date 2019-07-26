@@ -13,7 +13,7 @@ const state = {
     locale: "",
     locale_loading: false,
     loading: true,
-    currentIndex: 2,
+    currentIndex: 3,
 };
 
 const actions = {

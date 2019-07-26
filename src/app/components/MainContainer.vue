@@ -18,7 +18,7 @@ import { TweenMax } from 'gsap';
                 width: window.innerWidth,
                 height: window.innerHeight,
                 projects: [],
-                index: 2,
+                index: 3,
                 aboutOpened: false,
                 innerProjectOpened: false,
             };
@@ -37,7 +37,7 @@ import { TweenMax } from 'gsap';
                 this.height = data.height;
             },
             getData() {
-                axios.get('https://api.myjson.com/bins/8wsy1')
+                axios.get('https://api.myjson.com/bins/p43h9')
                 .then((response) => {
                     console.log(response);
                     this.projects = response.data;
@@ -90,7 +90,7 @@ import { TweenMax } from 'gsap';
             },
             previousProject() {
                 this.innerProjectOpened = false;
-                if (this.index < 2) {
+                if (this.index < 3) {
                     this.$refs.project[this.index + 1].previousProject(this.index);
                     if (this.isPhone) {
                         TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 0});
@@ -165,9 +165,9 @@ import { TweenMax } from 'gsap';
             :innerImageSrc2 = project.content.images[1]
             :innerImageSrc3 = project.content.images[2]
         ></project-component>
-        <div class="project__image" v-for="(project, index, key) of projects" :key="key" :index="index" ref="projectImage" :style="{backgroundImage: 'url(' + project.image + ')', opacity: index == 2 ? 1 : 0,  backgroundSize: index === 0 ? 'contain' : 'cover',}" :class="{'project__image--slided': innerProjectOpened}"></div>
+        <div class="project__image" v-for="(project, index, key) of projects" :key="key" :index="index" ref="projectImage" :style="{backgroundImage: 'url(' + project.image + ')', opacity: index == 3 ? 1 : 0,  backgroundSize: index === 3 ? 'contain' : 'cover',}" :class="{'project__image--slided': innerProjectOpened}"></div>
         <div class="button__next" @click="nextProject" :class="{'button__next--disabled': index == 0}"></div>
-        <div class="button__previous" @click="previousProject" :class="{'button__previous--disabled': index == 2}"></div>
+        <div class="button__previous" @click="previousProject" :class="{'button__previous--disabled': index == projects.length-1}"></div>
         <about ref="aboutComponent" @openAbout="onShowAbout"></about>
       </div>
 </template>
