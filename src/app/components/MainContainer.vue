@@ -37,7 +37,7 @@ import { TweenMax } from 'gsap';
                 this.height = data.height;
             },
             getData() {
-                axios.get('https://api.myjson.com/bins/c4bw9')
+                axios.get('https://api.myjson.com/bins/8wsy1')
                 .then((response) => {
                     console.log(response);
                     this.projects = response.data;

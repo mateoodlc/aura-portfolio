@@ -104,13 +104,13 @@ import { TweenMax, Power2 } from 'gsap';
                         :index = index
                         v-show="projectDetailsOpened"
                     ></project-content-component>
-                    <transition name="fade">
+                    <main-transition>
                         <div class="project__description-container" v-show="!projectDetailsOpened">
                             <h2 v-show="!isPhone">PRODUCT DESIGN</h2>
                             <h3 class="project__description-title">{{title}}</h3>
                             <p class="project__description-text">{{description}}</p>
                         </div>
-                    </transition>
+                    </main-transition>
                     <button class="project__show-more--button" :class="{'button-actived': projectDetailsOpened}" @click="openDetails">
                         <p v-show="!projectDetailsOpened && !isPhone">Show Details</p>
                         <p v-show="projectDetailsOpened && !isPhone">Hide Details</p>
