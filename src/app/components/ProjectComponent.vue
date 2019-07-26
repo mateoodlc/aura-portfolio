@@ -25,6 +25,7 @@ import { TweenMax, Power2 } from 'gsap';
             title: {type: String, required: true},
             description: {type: String, required: true},
             contentTitle: {type: String, required: false},
+            date: {type: String, required: true},
             index: {type: Number, required: true},
             innerTitle: {type: String, required: true},
             innerText: {type: String, required: true},
@@ -82,6 +83,7 @@ import { TweenMax, Power2 } from 'gsap';
         },
         mounted() {
             this.buildProjectAnimation();
+            TweenMax.to(this.$refs.showMoreButton, 0.2, {backgroundColor: this.color, ease: Power2.easeIn, delay: 1})
         }
     };
 </script>
@@ -119,6 +121,11 @@ import { TweenMax, Power2 } from 'gsap';
                         <p v-show="projectDetailsOpened && !isPhone">Hide Details</p>
                         <span ref="showMoreButton"></span>
                     </button>
+                </div>
+            </transition>
+            <transition name="date-fade">
+                <div class="project__date" v-show="!isPhone && index == $store.getters.currentIndex">
+                    <h3>{{date}}</h3>
                 </div>
             </transition>
         </div>

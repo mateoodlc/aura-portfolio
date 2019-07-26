@@ -152,6 +152,16 @@
     +below(800px)
         font-size: 10rem
 
+.project__date
+    position: absolute;
+    bottom: 1rem;
+    left: 1.5rem;
+    z-index: 1001;
+    text-transform: lowercase;
+    letter-spacing: 3px;
+    h3
+        color: #fff
+
 .project__show-more--button
     position: absolute;
     display: block;
@@ -163,10 +173,12 @@
     z-index: 999;
     background: none;
     user-select: none
-    +below(800px)
+    +below(550px)
         position: fixed;
         top: 85vh;
         bottom: unset;
+    +below(800px)
+        bottom: 1rem;
     p
         position: absolute;
         right: 130%
@@ -174,6 +186,8 @@
         width: 100%;
         min-width: 130px;
         line-height: 1.9
+        text-transform: lowercase;
+        letter-spacing: 3px;
     span
         position: absolute;
         display: block;
@@ -183,8 +197,8 @@
         height: 100%;
         background: #303030;
         border-radius: 50%;
-        box-shadow: 0 10px 20px 10px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease
+        box-shadow: 0 5px 10px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow .3s ease;
         &:before, &:after
             content: '';
             display: block;
@@ -194,13 +208,14 @@
             width: 15px;
             height: 2px;
             background: #fff;
-            transition transform 0.3s ease
+            transition: transform 0.3s ease;
         &:before
             transform: translate(-50%, -50%)
         &:after
             transform: translate(-50%, -50%) rotate(90deg);
         &:hover
             transform: scale(1.1);
+            box-shadow: 0 5px 12px 7px rgba(0, 0, 0, 0.2);
     &.button-actived
         span
             &:after
@@ -213,5 +228,16 @@
     transition: opacity .3s .5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+
+.date-fade-enter-active {
+    transition: opacity .5s .8s ease;
+}
+.date-fade-leave-active {
+    transition: opacity .2s ease;
+}
+.date-fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
