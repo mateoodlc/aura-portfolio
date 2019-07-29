@@ -1,4 +1,3 @@
-import { TweenMax, Power2 } from 'gsap';
 <style src="styles/components/ProjectComponent.styl" lang="stylus" scoped></style>
 
 <script>
@@ -42,7 +41,7 @@ import { TweenMax, Power2 } from 'gsap';
                         .to(this.$refs.projectWave, 0.4, {transformOrigin: 'bottom'}, 0)
                         .to(this.$refs.projectWave, 0.5, {scaleY: 1, ease: Power3.easeIn}, 0)
                         .to(this.$refs.projectWave, 0.1, {transformOrigin: '100% 0'})
-                        .to(this.$refs.projectWave, 0.4, {scaleY: 0, ease: Power3.easeIn});
+                        .to(this.$refs.projectWave, 0.4, {scaleY: 0, ease: Power3.easeIn})
                     /* this.projectDetailsTl = new TimelineMax({paused: true, delay: 0})
                         //.fromTo(this.$refs.projectBackground, 0.3, {scaleX: 1}, {scaleX: 0.7, ease: Power3.easeOut}, 0 ) */
                 } else {
@@ -67,6 +66,22 @@ import { TweenMax, Power2 } from 'gsap';
                     this.mobileProjectTimeline.reverse();
                 }
             },
+            nextProjectSlideLeave() {
+                TweenMax.fromTo(this.$refs.projectDescriptionContainer, 0.5, {top: '45%', opacity: 1}, {top: '0%', opacity: 0, ease: Power2.easeIn}, 0);
+            },  
+            nextProjectSlideEnter() {
+                TweenMax.fromTo(this.$refs.projectDescriptionContainer, 0.8, {top: '100%'}, {top: '45%', ease: Power2.easeOut, delay: 0.8});
+                TweenMax.fromTo(this.$refs.projectDescriptionContainer, 0.8, {opacity: 0}, {opacity: 1, ease: Power2.easeOut, delay: 1});
+            },
+            prevProjectSlideLeave() {
+                console.log('previous is leaving')
+                TweenMax.fromTo(this.$refs.projectDescriptionContainer, 0.5, {top: '45%', opacity: 1}, {top: '80%', opacity: 0, ease: Power2.easeIn}, 0);
+            },  
+            prevProjectSlideEnter() {
+                console.log('previous is entering')
+                TweenMax.fromTo(this.$refs.projectDescriptionContainer, 0.8, {opacity: 0}, {opacity: 1, ease: Power2.easeOut, delay: 1.8});
+                TweenMax.fromTo(this.$refs.projectDescriptionContainer, 0.8, {top: '0%'}, {top: '45%', ease: Power2.easeOut, delay: 1.4});
+            },  
             openDetails() {
                 TweenMax.to(this.$refs.showMoreButton, 0.1, {scale: 0.5, ease: Power2.ease})
                 TweenMax.to(this.$refs.showMoreButton, 0.2, {scale: 1, ease: Power2.easeIn, delay: 0.1})
@@ -89,7 +104,7 @@ import { TweenMax, Power2 } from 'gsap';
                         }, 100)
                     }
                 }
-            }
+            },
         },
         computed: {
             isPhone() {

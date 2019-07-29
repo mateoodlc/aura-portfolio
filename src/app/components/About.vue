@@ -47,9 +47,9 @@
 				</div>
 				<div class= "about__content">
 					<div class="about__text" ref="aboutText">
-						<p>Diseñadora Industrial grado Magna Cum Laude, interesada en  el Diseño de Interiores y Mobiliario. Con experiencia en Diseño de Producto, Diseño Gráfico y Fotografía de Producto.
-							<br><br>Habilidades de modelado 3D y renderizado y aplicación de herramientas de Design Thinking e Innovación. Con facilidad para el trabajo en equipo y en constante aprendizaje sobre las nuevas tendencias de diseño.
-							<br><br>Apasionada por los medios digitales e interfaces, el diseño y desarrollo de estas. Self-taught web developer, con interés de implementar y ampliar conocimientos en código y desarrollo Front End.
+						<p>Industrial Designer graduated with honors Magna Cum Laude, interested in Interior and Furniture Design. With experience in Product Design, Graphic Design and Product Photography.
+							<br><br>Strong skills in 3D modeling and rendering, application of Design Thinking and Innovation tools. With ease for teamwork and constantly learning about new design trends.
+							<br><br>Passionate about digital media and interfaces, it´s design and development. Self-taught web developer, interested in implementing and expanding knowledge in code and Frontend development.
 						</p>
 						<div class="about__contact">
 							<div class="about__social">

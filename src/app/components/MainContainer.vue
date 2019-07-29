@@ -21,6 +21,7 @@ import { TweenMax } from 'gsap';
                 index: 3,
                 aboutOpened: false,
                 innerProjectOpened: false,
+                isSliding: false,
             };
         },
         created() {
@@ -37,7 +38,7 @@ import { TweenMax } from 'gsap';
                 this.height = data.height;
             },
             getData() {
-                axios.get('https://api.myjson.com/bins/p43h9')
+                axios.get('https://api.myjson.com/bins/1gypm5')
                 .then((response) => {
                     console.log(response);
                     this.projects = response.data;
@@ -49,6 +50,10 @@ import { TweenMax } from 'gsap';
             },
             nextProject() {
                 this.innerProjectOpened = false;
+                this.isSliding = true;
+                setTimeout(() => {
+                    this.isSliding = false;
+                }, 400);
                     if (!this.isPhone && !this.isTablet) {
                         if (this.index > 0) {
                             if (this.index >= 1) {
@@ -59,7 +64,9 @@ import { TweenMax } from 'gsap';
                                 TweenMax.to(this.$refs.projectImage[this.index], 1.5, {top: '-20%', ease: Power1.easeOut});
                             }
                             this.$refs.project[this.index].nextProject(this.index);
+                            this.$refs.project[this.index].nextProjectSlideLeave();
                             this.index -= 1;
+                            this.$refs.project[this.index].nextProjectSlideEnter();
                             this.$store.commit(CURRENT_INDEX, this.index);
                         }
                     } else if(this.isTablet) {
@@ -91,6 +98,10 @@ import { TweenMax } from 'gsap';
             },
             previousProject() {
                 this.innerProjectOpened = false;
+                this.isSliding = true;
+                setTimeout(() => {
+                    this.isSliding = false;
+                }, 400);
                 if (this.index < 3) {
                     this.$refs.project[this.index + 1].previousProject(this.index);
                     if (this.isPhone) {
@@ -111,7 +122,9 @@ import { TweenMax } from 'gsap';
                         TweenMax.to(this.$refs.projectImage[this.index], 0.5, {opacity: 0});
                         TweenMax.fromTo(this.$refs.projectImage[this.index], 1.5, {top: '50%'}, {top: '100%', ease: Power1.easeOut});
                         TweenMax.to(this.$refs.projectImage[this.index], 0, {display: 'none', delay: 1});
+                        this.$refs.project[this.index].prevProjectSlideLeave();
                         this.index += 1;
+                        this.$refs.project[this.index].prevProjectSlideEnter();
                         this.$refs.project[this.index].resizeDescriptionContainer(false);
                         TweenMax.to(this.$refs.projectImage[this.index], 1.5, {top: '50%', ease: Power1.easeOut, delay: 0.3});
                         TweenMax.to(this.$refs.projectImage[this.index], 1.5, {opacity: 1, ease: Power1.ease, delay: 1.1});
@@ -129,6 +142,9 @@ import { TweenMax } from 'gsap';
             },
             openProjectDetails(value) {
                 this.innerProjectOpened = value;
+            },
+            onStopSliding() {
+                this.isSliding = !this.isSliding;
             }
         },
         computed: {
@@ -168,8 +184,8 @@ import { TweenMax } from 'gsap';
             :innerImageSrc3 = project.content.images[2]
         ></project-component>
         <div class="project__image" v-for="(project, index, key) of projects" :key="key" :index="index" ref="projectImage" :style="{backgroundImage: 'url(' + project.image + ')', opacity: index == 3 ? 1 : 0,  backgroundSize: index === 3 ? 'contain' : 'cover',}" :class="{'project__image--slided': innerProjectOpened}"></div>
-        <div class="button__next" @click="nextProject" :class="{'button__next--disabled': index == 0}"></div>
-        <div class="button__previous" @click="previousProject" :class="{'button__previous--disabled': index == projects.length-1}"></div>
+        <div class="button__next" @click="nextProject" :class="{'button__next--disabled': index == 0}" :style="{pointerEvents: isSliding ? 'none' : 'auto'}"></div>
+        <div class="button__previous" @click="previousProject" :class="{'button__previous--disabled': index == projects.length-1}" :style="{pointerEvents: isSliding ? 'none' : 'auto'}"></div>
         <about ref="aboutComponent" @openAbout="onShowAbout"></about>
       </div>
 </template>
