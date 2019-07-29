@@ -14,7 +14,7 @@ import { TweenMax, Power2 } from 'gsap';
                 mobileProjectTimeline: undefined,
                 projectDetailsTl: undefined,
                 projectDetailsOpened: false,
-                isMobileData: isMobile
+                isMobileData: isMobile,
             };
         },
         props: {
@@ -71,21 +71,10 @@ import { TweenMax, Power2 } from 'gsap';
                 TweenMax.to(this.$refs.showMoreButton, 0.1, {scale: 0.5, ease: Power2.ease})
                 TweenMax.to(this.$refs.showMoreButton, 0.2, {scale: 1, ease: Power2.easeIn, delay: 0.1})
                 this.projectDetailsOpened = !this.projectDetailsOpened;
-            }
-        },
-        computed: {
-            isPhone() {
-                return isMobile.phone;
             },
-            isTablet() {
-                return isMobile.tablet;
-            }
-        },
-        watch: {
-            projectDetailsOpened(newValue, oldValue) {
-                console.log(newValue, oldValue);
+            resizeDescriptionContainer(newValue) {
                 if (this.isPhone) {
-                    if (newValue) {
+                    if (newValue === true) {
                         this.$nextTick(() => {
                             let dynamicHeight = this.$refs.projectContentRef.$el.offsetHeight;
                             this.$refs.projectDescription.style.height = dynamicHeight + 'px';
@@ -102,13 +91,25 @@ import { TweenMax, Power2 } from 'gsap';
                 }
             }
         },
+        computed: {
+            isPhone() {
+                return isMobile.phone;
+            },
+            isTablet() {
+                return isMobile.tablet;
+            }
+        },
+        watch: {
+            projectDetailsOpened(newValue, oldValue) {
+                this.resizeDescriptionContainer(newValue);
+            }
+        },
         mounted() {
             this.buildProjectAnimation();
             TweenMax.to(this.$refs.showMoreButton, 0.2, {backgroundColor: this.color, ease: Power2.easeIn, delay: 1})
             if (this.isPhone) {
                 setTimeout(() => {
                     this.$refs.projectDescription.style.height = this.$refs.projectDescriptionContainer.offsetHeight + 'px';
-                    console.log(this.$refs.projectDescriptionContainer.offsetHeight);
                 }, 100)
             }
         }
@@ -139,7 +140,7 @@ import { TweenMax, Power2 } from 'gsap';
                     <main-transition>
                         <div class="project__description-container" ref="projectDescriptionContainer" v-show="!projectDetailsOpened">
                             <h2>PRODUCT DESIGN</h2>
-                            <h3 class="project__description-title">{{title}}</h3>
+                            <h1 class="project__description-title">{{title}}</h1>
                             <p class="project__description-text">{{description}}</p>
                         </div>
                     </main-transition>

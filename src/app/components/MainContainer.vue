@@ -84,6 +84,7 @@ import { TweenMax } from 'gsap';
                             }
                             this.$refs.project[this.index].nextProject(this.index);
                             this.index -= 1;
+                            this.$refs.project[this.index].resizeDescriptionContainer(false);
                             this.$store.commit(CURRENT_INDEX, this.index);
                         }
                     }
@@ -111,6 +112,7 @@ import { TweenMax } from 'gsap';
                         TweenMax.fromTo(this.$refs.projectImage[this.index], 1.5, {top: '50%'}, {top: '100%', ease: Power1.easeOut});
                         TweenMax.to(this.$refs.projectImage[this.index], 0, {display: 'none', delay: 1});
                         this.index += 1;
+                        this.$refs.project[this.index].resizeDescriptionContainer(false);
                         TweenMax.to(this.$refs.projectImage[this.index], 1.5, {top: '50%', ease: Power1.easeOut, delay: 0.3});
                         TweenMax.to(this.$refs.projectImage[this.index], 1.5, {opacity: 1, ease: Power1.ease, delay: 1.1});
                     }
@@ -143,12 +145,12 @@ import { TweenMax } from 'gsap';
 <template>
       <div class="MainContainer">
         <div class="logo">
-            <h1 v-if="!isPhone">aura bravo</h1>
-            <h1 v-if="isPhone">aura.</h1>
+            <h2 v-if="!isPhone">aura bravo</h2>
+            <h2 v-if="isPhone">aura.</h2>
         </div>
         <div class="about-button" :class="{'about-button-actived': aboutOpened}" @click="onShowAbout">
-            <h1 v-if="!isPhone">about me</h1>
-            <h1 v-if="isPhone">about</h1>
+            <h2 v-if="!isPhone">about me</h2>
+            <h2 v-if="isPhone">about</h2>
             <span></span>
         </div>
         <project-component v-for="(project, index, key) of projects" :key="key" :index="index" ref="project" @onDetailsOpened="openProjectDetails" v-show="isPhone ? !aboutOpened : true"
